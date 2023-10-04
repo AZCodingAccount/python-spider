@@ -37,8 +37,8 @@ doc3 = pq(filename='test.html')
 # 1：find方法，这个相当于选择器分开写了，但是这个不是遍历每一个，是直接一次拿到符合条件的字符串
 items = doc1('#container')
 lis = items.find('.active')
-print(lis)
+# print(lis)
 # 2：children方法，children会忽略孙子等节点只关心子节点
 items = doc1('#container')
 lis = items.children('.active')
-print(lis)
+# print(lis)
