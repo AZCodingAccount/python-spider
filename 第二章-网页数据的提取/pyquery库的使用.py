@@ -33,12 +33,21 @@ doc3 = pq(filename='test.html')
 # for item in doc1('#container .item-1 a').items():
 # print(item.text())
 
-# 查找节点
+# TODO:查找节点
+# 子节点
 # 1：find方法，这个相当于选择器分开写了，但是这个不是遍历每一个，是直接一次拿到符合条件的字符串
 items = doc1('#container')
-lis = items.find('.active')
-# print(lis)
+lis1 = items.find('.active')
+print(lis1)
 # 2：children方法，children会忽略孙子等节点只关心子节点
-items = doc1('#container')
-lis = items.children('.active')
-# print(lis)
+lis2 = items.children('.active')
+print(lis2)
+
+# 父节点
+# 1：parent方法，这个方法只会获取直接父节点
+parent = doc1('#container li').parent()
+print(parent)   # 获取到ul节点
+# 2：parents方法，获取到祖先节点
+parents = doc1('#container li').parents()
+print(parents)
+
