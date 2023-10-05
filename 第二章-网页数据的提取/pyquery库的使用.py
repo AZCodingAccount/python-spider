@@ -9,7 +9,7 @@ html = '''
          <li class="item-0">first item</li>
          <li class="item-1"><a href="link2.html" class="link">second item</a></li>
          <li class="item-2 active"><a href="link3.html" class="link"><span class="bold">third item</span></a></li>
-         <li class="item-3 active"><a href="link4.html" class="active" class="link">fourth item</a></li>
+         <li class="item-3 active"><a href="link4.html" class="active link">fourth item</a></li>
          <li class="item-4"><a href="link5.html">fifth item</a></li>
      </ul>
  </div>
