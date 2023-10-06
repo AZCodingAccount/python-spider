@@ -1,3 +1,4 @@
+# pyquery官网：http://pyquery.readthedocs.io/
 # pyquery库选择器跟css类似
 # 导包
 from pyquery import PyQuery as pq
@@ -76,9 +77,34 @@ items_li = doc1('#container li')
 classes = doc1('#container .item-2').attr('class')
 a_href_value = doc1('#container .item-2 a').attr('href')
 # print('第三个li的所有属性值为：' + classes + "第三个li的a里面的href属性值为" + str(a_href_value))
-
-# 获取所有class="link"的a节点的href属性（！！！如果使用attr是不能实现的，只会返回节点中第一个的href，这个时候需要借助items这个方法遍历）
+# 需求3：获取所有class="link"的a节点的href属性（！！！如果使用attr是不能实现的，只会返回节点中第一个的href，这个时候需要借助items这个方法遍历）
 a_s = doc1('.link')
-print(a_s)
-for a in a_s.items():
-    print(a.attr('href'))
+# print(a_s)
+# for a in a_s.items():
+#     print(a.attr('href'))
+
+# 获取文本
+# 需求1：获取第一个li里面的文本。需求2：获取所有li里面的文本(!!! 获取到所有节点，然后获取这些节点的文本，pyquery库会封装拼接成一个新的字符串)
+li_text = doc1('#container .item-0').text()
+lis_text = doc1('#container li').text()
+# print("第一个li的文本内容是：" + li_text + "所有li里面的内容是：" + lis_text)
+
+# TODO:节点操作
+# 可以对节点的属性和节点本身进行操作，修改原始的pyquery对象
+# 需求1：给第一个节点添加一个highlight类。把所有li节点的active类给移除了（如果有）
+new_doc1 = doc1('#container .item-0').add_class('highlight')
+doc1('#container li').remove_class('active')
+# print(doc1)
+
+# 需求2：给第三个li加上id为third-li，修改第三个li的内容为new third li
+doc1('#container .item-3').attr('id', 'third-li').text('new third li')
+# print(doc1)
+
+# 需求3：移除第三个li（对于想要提纯数据的时候挺有效的）
+doc1('#container').find('.item-2').remove()
+# print(doc1)
+
+# 需求三，选中最后一个li和第四个li
+first_li = doc1('li:first-child')
+fourth_li = doc1('li:nth-child(4)')
+print(f"第一个li：{first_li}，第四个li{fourth_li}")
