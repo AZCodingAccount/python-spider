@@ -1,6 +1,6 @@
 from lxml import etree
 
-# Xpath解析HTML页面只需要三个步骤。
+# Xpath解析HTML页面只需要三个步骤。！！！可以解析html，也可以解析xml。
 #               1. 构造xpath对象（把html字符串转换成xpath对象）
 #               2. 编写选择器（最重要） 这个主要可以通过节点的属性，节点相互之间的层级关系，是否递归的进行匹配这些因素。
 #               3. 取出需要的text数据

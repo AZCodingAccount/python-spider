@@ -1,7 +1,11 @@
 import re
-
 from bs4 import BeautifulSoup
 
+"""
+     BeautifulSoup这个选择器可以选择很多解析器，html.parser,lxml等等。
+     就是根据标签名和属性值获取，获取多了就是一个列表再遍历，还想再往下获取就再find。
+     可以使用css选择器 （select方法）。个人比较习惯用pyquery，这个感觉没啥特点
+"""
 html = """
 <html><head><title>The Dormouse's story</title></head>
 <body>
@@ -99,6 +103,6 @@ print("--------------------------------")
 tag = soup2.select('#list-2 .element:first-child')  # 选择id为list-2下的类为element下的第一个节点，返回的是一个列表
 print(tag)
 # 选取到节点之后就可以获取一系列属性，属性名，string文本，标签名
-print(tag[0].attrs)     # 获取当前标签所有属性，返回的是一个字典
-print(tag[0].string)    # 获取标签里面的文本
-print(tag[0].name)      # 获取当前标签名
+print(tag[0].attrs)  # 获取当前标签所有属性，返回的是一个字典
+print(tag[0].string)  # 获取标签里面的文本
+print(tag[0].name)  # 获取当前标签名
