@@ -1,7 +1,12 @@
 # pyquery官网：http://pyquery.readthedocs.io/
-# pyquery库选择器跟css类似
 # 导包
 from pyquery import PyQuery as pq
+
+"""
+        pyquery是完美使用css选择器的，类似于jquery，常用有：
+                        PyQuery(html)初始化，doc()选择元素，items()获取所有节点迭代器对象,text()获取文本，attr("属性名")获取属性
+                        html()获取html文本
+"""
 
 # 定义要演示的html字符串，接下来的操作就对它做信息提取
 html = '''
