@@ -17,7 +17,7 @@ def run(i):
     print("数据正在爬取中~", i)
 
 
-# 生产者消费者模拟进程通信
+# 生产者消费者模拟进程通信，应用场景是生产者抓取数据，消费者进程下载数据
 def run_provider(msg_queue, time_dict):
     msg_queue.put("product1")
     msg_queue.put("product2")
@@ -57,17 +57,17 @@ if __name__ == '__main__':
     # print(f"一共运行了{end_time - start_time}")  #只运行了1.6s，而单进程至少是6s多
 
     # TODO:进程之间如何通讯
-    # msg_queue = Manager().Queue()
-    # time_dict = Manager().dict()
-    # # 创建一个生产者和一个消费者
-    # p_provider = Process(target=run_provider, args=(msg_queue, time_dict))
-    # p_consumer = Process(target=run_consumer, args=(msg_queue, time_dict))
-    # p_provider.start()
-    # p_consumer.start()
-    # p_provider.join()
-    # p_consumer.join()
-    # # 这个时间不太固定，探究也没啥意义，生产者生产，消费者消费
-    # print(f"父进程结束了~{time_dict.get('producer')},{time_dict.get('consumer')}")
+    msg_queue = Manager().Queue()
+    time_dict = Manager().dict()
+    # 创建一个生产者和一个消费者
+    p_provider = Process(target=run_provider, args=(msg_queue, time_dict))
+    p_consumer = Process(target=run_consumer, args=(msg_queue, time_dict))
+    p_provider.start()
+    p_consumer.start()
+    p_provider.join()
+    p_consumer.join()
+    # 这个时间不太固定，探究也没啥意义，生产者生产，消费者消费
+    print(f"父进程结束了~{time_dict.get('producer')},{time_dict.get('consumer')}")
 
     # 进程池的使用，跟Java线程池，数据库连接池都差不多，为了减少频繁创建和销毁
     p = Pool()  # 不传参默认cpu核心数，传参代表进程池有几个进程
