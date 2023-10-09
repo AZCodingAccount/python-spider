@@ -41,33 +41,34 @@ def run_process_pool(i):
 
 if __name__ == '__main__':
     # TODO:进程创建，传参，提高效率
-    # # 看一下相对于单进程节约多长时间
+    # 看一下相对于单进程节约多长时间
     # start_time = time.time()
     # # 定义一个列表存储进程对象
-    # p_list=[]
+    # p_list = []
     # for i in range(1, 7):
     #     # 创建进程，target传入要让这个子进程干的事（即方法），args传入要传递给这个子进程的参数（加,号防止误认为是字符串或是int等）
     #     p = Process(target=run, args=(i,))
     #     p_list.append(p)
     #     p.start()
+    #     # p.terminate()     # 这个方法用于终止进程
     # for p in p_list:
     #     # 为了让主进程等待这些子进程执行完
     #     p.join()
     # end_time = time.time()
-    # print(f"一共运行了{end_time - start_time}")  #只运行了1.6s，而单进程至少是6s多
+    # print(f"一共运行了{end_time - start_time}")  # 只运行了1.6s，而单进程至少是6s多
 
     # TODO:进程之间如何通讯
-    msg_queue = Manager().Queue()
-    time_dict = Manager().dict()
-    # 创建一个生产者和一个消费者
-    p_provider = Process(target=run_provider, args=(msg_queue, time_dict))
-    p_consumer = Process(target=run_consumer, args=(msg_queue, time_dict))
-    p_provider.start()
-    p_consumer.start()
-    p_provider.join()
-    p_consumer.join()
-    # 这个时间不太固定，探究也没啥意义，生产者生产，消费者消费
-    print(f"父进程结束了~{time_dict.get('producer')},{time_dict.get('consumer')}")
+    # msg_queue = Manager().Queue()
+    # time_dict = Manager().dict()
+    # # 创建一个生产者和一个消费者
+    # p_provider = Process(target=run_provider, args=(msg_queue, time_dict))
+    # p_consumer = Process(target=run_consumer, args=(msg_queue, time_dict))
+    # p_provider.start()
+    # p_consumer.start()
+    # p_provider.join()
+    # p_consumer.join()
+    # # 这个时间不太固定，探究也没啥意义，生产者生产，消费者消费
+    # print(f"父进程结束了~{time_dict.get('producer')},{time_dict.get('consumer')}")
 
     # 进程池的使用，跟Java线程池，数据库连接池都差不多，为了减少频繁创建和销毁
     p = Pool()  # 不传参默认cpu核心数，传参代表进程池有几个进程
