@@ -30,7 +30,7 @@ def run_consumer(msg_queue, time_dict):
     product1 = msg_queue.get()
     time_dict['consumer'] = time.time_ns()
     product2 = msg_queue.get()
-    product3 = msg_queue.get()
+    product3 = msg_queue.get()  # 设置timeout时间，几秒内没有生产者放东西就直接结束
     print(f"消费者——当前父进程是{os.getppid()}，当前子进程是{os.getpid()},{product1},{product2},{product3}")
 
 
