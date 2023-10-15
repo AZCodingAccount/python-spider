@@ -26,6 +26,8 @@ from lxml import etree
 """
 # 定义全局变量,title为集数名，href为集数url，m3u8_url为请求m3u8文件的url，baseurl为请求，video_name为影片名，episode_n为第几集
 title = href = m3u8_url = baseurl = video_name = episode_n = None
+
+
 # 通过用户输入的url来查找当前美剧的名称和对应的episode
 def get_section(url):
     global title, href
@@ -42,6 +44,7 @@ def get_section(url):
     res.append({'name': name})
     return res
 
+
 # 从选集页面源码里面找到播放器相关的地址，供得到m3u8url使用
 def find_m3u8_url(href):
     res = requests.get(href, headers=headers)
@@ -52,6 +55,7 @@ def find_m3u8_url(href):
     query_id = re.search(pattern, id).group(1)
     return f"https://php.playerla.com/mjplay/?id={query_id}"
 
+
 # 通过上一个函数得到的播放器地址请求得到m3u8的url
 def get_m3u8_url(m3u8_url):
     res = requests.get(m3u8_url, headers=headers)
@@ -59,6 +63,7 @@ def get_m3u8_url(m3u8_url):
     pattern = r'var playconfig = {\s*"url":\s*"([^"]+)"'
     m3u8_url = re.search(pattern, res.text).group(1)
     return m3u8_url
+
 
 # 交互页面
 def say_aloha():
@@ -152,10 +157,16 @@ def merge():
     os.chdir('./ts')
     cmd = f'ffmpeg -i index.m3u8 -c copy {video_name}-{episode_n}.mp4'
     os.system(cmd)
+
+
+def delete():
+    os.chdir('./ts')
     # 删除m3u8和ts文件
     for file in os.listdir('./'):
-        if file.endswith('.ts'):
-            os.remove(os.path.join(f'./ts/'))
+        if file.endswith('.ts') and file.endswith('.m3u8'):
+            os.remove(file)
+
+
 
 # 程序主入口
 async def main():
@@ -178,4 +189,5 @@ if __name__ == '__main__':
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36'
     }
-    asyncio.run(main())
+    # asyncio.run(main())
+    delete()
