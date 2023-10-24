@@ -69,7 +69,7 @@ def extract_html():
         # 处理views
         for view in views:
             views_count = re.findall(r"\d{1,}", view)[0]
-            views_counts.append(views_count)
+            one_page_views_counts.append(views_count)
         # 获取评论数
         comments = html.xpath("/html/body/section/div/div/article/p[1]/a/text()")
         # 处理comments
