@@ -7,12 +7,14 @@
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
 
+
 # 这里为了简便，写到三个不同的txt文件里面就可以了
 class BaseScrapyPlusPipeline:
     def open_spider(self, spider):
         print("爬虫开始了~")
 
     def process_item(self, item, spider):
+        # print(item)
         return item
 
     def close_spider(self, spider):

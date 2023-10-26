@@ -4,8 +4,8 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy_redis.spiders import RedisCrawlSpider
 
 """
-            这里演示scrapy的全站抓取和分布式爬虫，全站抓取一定要慎重，不要影响别人网站的正常运行。配置好rules和delay。这里以我的博客演示，
-        一共就几十个url，干不废。
+            这里演示scrapy的全站抓取和分布式爬虫，配置随机UA和手动维护cookie，全站抓取一定要慎重，不要影响别人网站的正常运行。配置好rules和delay。
+        这里以我的博客演示，一共就几十个url，干不废。
         但是这里需要思考，我们要哪个页面是为了提取什么数据，
                     打开具体的文章，就获取文章标题和内容。定义一个提取文章数据的方法parse_article
                     比如说我打开博客的标签，就是获取标签下的文章标题，就定义一个提取文章标题的方法parse_tag_headlines。
@@ -14,12 +14,12 @@ from scrapy_redis.spiders import RedisCrawlSpider
 """
 
 
-class BlogspiderSpider(RedisCrawlSpider):
+class BlogspiderSpider(CrawlSpider):
     count = 0
     name = "blogspider"
     # allowed_domains = ["bugdesigner.cn"]
-    # start_urls = ["https://bugdesigner.cn"]
-    redis_key = 'blogQuene'  # 使用管道名称
+    start_urls = ["https://bugdesigner.cn"]
+    # redis_key = 'blogQuene'  # 使用管道名称
 
     rules = (
         Rule(LinkExtractor(allow=r"https://www.bugdesigner.cn/(?!tag/|cate/|aboutme/)[^/]+/$"),
@@ -28,15 +28,23 @@ class BlogspiderSpider(RedisCrawlSpider):
         Rule(LinkExtractor(allow=r".*"), callback="parse_count", follow=True),)
 
     # 保底的方法
-    def parse_url(self, response):
+    def parse_count(self, response):
+        item1 = {}
         self.count += 1
+        print(f"第{self.count}次-1",response.request.url)
+        return item1
 
     # 批量抓取文章
     def parse_article(self, response):
+        print(f"第{self.count}次-2")
         item = {}
         # 记录爬取的url个数
         self.count += 1
         # 提取博客文章标题
         title = response.xpath("/html/body/div[2]/div/div/div[1]/div[1]/div[2]/h1/text()").extract_first()
-        print(title)
-        yield item
+        # print(title)
+        # print(response.text)
+        # 提取博客文章内容
+        content = response.xpath('//div[@id="lightgallery"]').extract_first()
+        # print(content)
+        return item

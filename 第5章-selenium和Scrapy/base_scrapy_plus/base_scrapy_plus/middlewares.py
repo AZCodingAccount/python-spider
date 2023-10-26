@@ -2,12 +2,18 @@
 #
 # See documentation in:
 # https://docs.scrapy.org/en/latest/topics/spider-middleware.html
+import random
 
 from scrapy import signals
+from base_scrapy_plus.settings import USER_AGENTS_LIST # 注意导入路径,请忽视pycharm的错误提示
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
 
+class UserAgentMiddleware(object):
+    def process_request(self, request, spider):
+        user_agent = random.choice(USER_AGENTS_LIST)
+        request.headers['User-Agent'] = user_agent
 
 class BaseScrapyPlusSpiderMiddleware:
     # Not all methods need to be defined. If a method is not defined,
