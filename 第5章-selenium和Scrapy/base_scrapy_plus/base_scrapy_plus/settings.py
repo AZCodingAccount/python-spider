@@ -77,7 +77,7 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    "base_scrapy_plus.pipelines.BaseScrapyPlusPipeline": 300,
-   # 'scrapy_redis.pipelines.RedisPipeline': 800,
+   'scrapy_redis.pipelines.RedisPipeline': 800,
 
 }
 
@@ -107,13 +107,13 @@ REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
 
-# # 配置分布式
-# DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
-# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-# SCHEDULER_PERSIST = False
+# 配置分布式
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_PERSIST = True
 #
 #
-# # 或者使用下面的方式
-# REDIS_HOST = "192.168.182.100"
-# REDIS_PORT = 6380
-# REDIS_PARAMS = {'password': '123456'}
+# 配置redis数据库信
+REDIS_HOST = "192.168.182.100"
+REDIS_PORT = 6380
+REDIS_PARAMS = {'password': '123456'}
