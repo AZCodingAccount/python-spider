@@ -9,7 +9,7 @@ from base_scrapy_plus.settings import USER_AGENTS_LIST # 注意导入路径,请�
 
 # useful for handling different item types with a single interface
 from itemadapter import is_item, ItemAdapter
-
+# 配置随机UA中间件
 class UserAgentMiddleware(object):
     def process_request(self, request, spider):
         user_agent = random.choice(USER_AGENTS_LIST)

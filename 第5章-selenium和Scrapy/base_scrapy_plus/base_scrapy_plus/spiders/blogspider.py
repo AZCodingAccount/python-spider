@@ -5,8 +5,8 @@ from scrapy_redis.spiders import RedisCrawlSpider
 from base_scrapy_plus.items import BaseScrapyPlusItem
 
 """
-            这里演示scrapy的全站抓取和分布式爬虫，配置随机UA和手动维护cookie，全站抓取一定要慎重，不要影响别人网站的正常运行。配置好rules和delay。
-        这里以我的博客演示，一共就几十个url，快一点点。
+            这里演示scrapy的全站抓取和分布式爬虫，配置随机UA，scrapy的知识点基本都用到了。下载中间件，items，管道，分布式爬取，全站抓取。
+        全站抓取一定要慎重，不要影响别人网站的正常运行。配置好rules和delay。这里以我的博客演示，一共就几十个url，快一点点。
         但是这里需要思考，我们要哪个页面是为了提取什么数据，
                     打开具体的文章，就获取文章标题和内容。定义一个提取文章数据的方法parse_article
                     比如说我打开博客的标签，就是获取标签下的文章标题，就定义一个提取文章标题的方法parse_tag_headlines。
