@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+
+    <script>
+        $(function () {
+            $.ajax({
+                url: "http://127.0.0.1:5000/process_jsonp",
+                method: "get",
+                // 典型, 京东.
+                dataType: "jsonp", // 它的执行逻辑是. 请求服务上的一个js. 然后会自动执行该js.将js函数内的东西. 丢给success
+                jsonp: "cb", // 传递给服务器的时候. 自动带上cb=xxxxxx 服务器端接收cb即可
+                success: function (data) { // 此时data可以直接收取到数据
+                    $(".success").text(data.name + ":" + data.age)
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+正在发送数据
+<div class="success"></div>
+</body>
+</html>

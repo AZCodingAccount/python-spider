@@ -1,0 +1,163 @@
+<!--JQuery前几年还是非常火的，现在技术升级成Vue，React等不咋用了，但是还是有很多网站没有迭代，因此学习一下语法就可以了
+主要是JQuery怎么发送AJAX请求（get，post）的，还有jsonp了解一下-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script>
+
+        /*  $(function () {
+              /!*
+                $是JQuery的灵魂，val()里面不传值是取值，里面传东西是拿值。其他的类推（注意attr和css）
+                text()处理innerText，html处理innerHTML，attr处理所有属性（属性名，属性值），css处理所有css样式（属性名，属性值）
+               *!/
+              $(".btn").on('click', function () {
+                  $(".info").text("");
+                  let username = $("#username").val();
+                  let password = $("#password").val();
+                  let gender = $("input:radio[name='gender']:checked").val();  // input标签中radio 并且name是gender的. 并且被选择的.
+                  let city = $("#city").val();
+
+                  let flag = true;
+                  if (!username) {
+                      $("#username_info").text('用户名不能为空!');
+                      // 设置样式
+                      $("#username_info").css('color', 'red');
+                      flag = false;
+                  }
+
+                  if (!password) {
+                      $("#password_info").text('密码不能为空!');
+                      flag = false;
+                  }
+
+                  if (!gender) {
+                      $("#gender_info").text('请选择性别!');
+                      flag = false;
+                  }
+
+                  if (!city) {
+                      $("#city_info").text('请选择城市!');
+                      flag = false;
+                  }
+
+                  if (flag) {
+                      $("#login_form").submit();
+                  } else {
+                      return;
+                  }
+              })
+          })*/
+
+        /*
+            * 发送get请求
+            * */
+        /*   function setCookie(name, value) {
+               let Days = 30;
+               let exp = new Date();
+               exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+               document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+           }
+
+           $(function () {
+               // 可以在js任意位置设置cookie信息
+               setCookie("name", "i-have-a-dream")
+               $(".get_btn").click(function () {
+                   $.ajax({
+                       url: "http://127.0.0.1:5000/ajax_get", // 服务器地址: 域名+url
+                       method: 'get',  // 发送get请求
+                       headers: {  // 添加请求头信息
+                           "token": "this is token",
+                       },
+                       // 跨域设置，很恶心的，最后也没把cookie带过去，因此直接就设置成同源的得了
+                       xhrFields: {withCredentials: true},
+                       crossDomain: true,
+                       data: {   // 传递参数
+                           name: 'zhangsan',
+                           _: new Date().getTime()
+                       },
+                       contentType: 'application/json;charset=utf8',
+                       beforeSend: function (req) {  // 也可以这样添加请求头信息
+                           req.setRequestHeader("token2", "this is token2");
+                       },
+                       success: function (back) {  // 请求成功后. 返回数据了. 要做什么?
+                           console.log(back);
+                       }
+                   });
+               })
+           })*/
+
+        /*
+        * 发送post请求
+        * */
+
+        $(function () {
+            $(".post_btn").click(function () {
+                $.ajax({
+                    url: '/ajax_post',
+                    method: 'post',
+                    data: JSON.stringify({
+                        name: 'zhangsan',
+                        id: '123456'
+                    }),
+                    headers: {  // 发送json数据. 要换这个头, 否则服务器收不到数据
+                        "Content-Type": "application/json;charset=utf-8"
+                    },
+                    dataType: "text",
+                    success: function (d) {
+                        let data = JSON.parse(d);
+                        console.log(data)
+                        let tbody = $("<tbody id='data_tbody'></tbody>")
+                        data.forEach(function (item) {
+                            let tr = `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.age}</td></tr>`;
+                            tbody.append(tr);
+                        });
+                        $('table').append(tbody);
+                    }
+                })
+            });
+        })
+    </script>
+</head>
+<body>
+<form id="login_form">
+    <label for="username">用户名: </label><input type="text" id="username" name="username"><span class="info"
+                                                                                                 id="username_info"></span><br/>
+    <label for="password">密码: </label><input type="password" id="password" name="password"><span class="info"
+                                                                                                   id="password_info"></span><br/>
+    <label>性别: </label>
+    <input type="radio" id="gender_men" name="gender" value="men"><label for="gender_men">男</label>
+    <input type="radio" id="gender_women" name="gender" value="women"><label for="gender_women">女</label>
+    <span class="info" id="gender_info"></span>
+    <br/>
+
+    <label for="city">城市: </label>
+    <select id="city" name="city">
+        <option value="">请选择</option>
+        <option value="bj">北京</option>
+        <option value="sh">上海</option>
+        <option value="gz">广州</option>
+        <option value="sz">深圳</option>
+    </select>
+    <span class="info" id="city_info"></span>
+    <br/>
+
+    <input type="button" class="btn" value="登录">
+    <input type="button" class="get_btn" value="点击发送get请求">
+    <input type="button" class="post_btn" value="点击发送post请求">
+</form>
+
+  <table width="80%" border="1">
+        <thead>
+        <tr>
+            <td>id</td>
+            <td>name</td>
+            <td>age</td>
+        </tr>
+        </thead>
+    </table>
+</body>
+</html>
