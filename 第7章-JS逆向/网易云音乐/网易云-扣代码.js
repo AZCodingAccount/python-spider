@@ -1,7 +1,6 @@
 const CryptoJS = require("crypto-js");
 
 function encrypt_data(i3x) {
-    const CryptoJS = require("crypto-js");
     function a(a) {
         var d, e, b = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", c = "";
         for (d = 0; a > d; d += 1)
