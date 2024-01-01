@@ -9,7 +9,7 @@ from Heroes import heroes  # 会自动运行Heroes里面的代码
 
 """
         这个逆向其实并不难，但是为了对代练通的尊重，我还是该hook就hook，其实就是一个简单的请求参数+时间戳+signkey的md5加密，作为app逆向的入门案例还是挺不错的。
-    主要的思路就是逆向出来sign，把代练通app反编译出来搜索LevelOrderList，话说代练通是DCloud旗下的吗，还是使用uniapp开发的，怎么包名都不是代练通。    
+    主要的思路就是逆向出来sign，把代练通app反编译出来搜索LevelOrderList，话说代练通是DCloud旗下的吗，还是外包给DCloud了，怎么包名都不是代练通。    
 """
 
 
@@ -84,11 +84,11 @@ def get_all_data(pub_type, pg_type):
     # 创建类实例
     my_database = MyDatabase()
     start_time = time.time()
-    for i in range(0, 2000):
+    for i in range(0, 2000):  # 爬取前2000页的
         res = get_data(i + 1, 20, pub_type, pg_type, "")
         # 存储数据
         count += len(res["LevelOrderList"])
-        print(i + 1, res["RecordCount"])
+        print(f"第{i + 1}页，爬取数据{res['RecordCount']}条")
         if len(res["LevelOrderList"]) == 0:
             break
         my_database.save_data(res)
@@ -135,20 +135,21 @@ if __name__ == '__main__':
     # get_all_data(1,1) # 这里爬取未被抢的订单，安卓的，失误
     # get_all_data(9,1) # 这里爬取已被抢的订单，安卓的，失误
     # 这里爬取所有订单（包括安卓和ios）
-    get_all_data(1, 0)
+    # get_all_data(1, 0)
 # 2023-11-28日继续爬取，4361条数据，共7688条有效数据 记录表为dailiantong_base id6224->10584，实际时间2023-11-27 23:10 订单时间：2024-01-04 11:10:14。TODO：矫正时间
 # 2023-12-06日继续爬取，2800条数据，共10488条有效数据 记录表为dailiantong_base id10584->13384。
+# 2024-01-01日继续爬取，5041条数据，共15529条有效数据 记录表为dailiantong_base id13384->18425。
 
 
 # 这里对每一个英雄进行搜索爬取
 # 2023-11-28日继续爬取，2428条数据，共4542条有效数据，记录表为heros_table id2114->4542
 # 2023-12-06日继续爬取，1620条数据，共6162条有效数据，记录表为heros_table id4542->6162
 # 这里时间也不是重点分析的点，就不再分析了，感觉应该是时间戳+一定的offset+代练时限。有点莫名其妙
-# total_count = 0
-# start_time = time.time()
-# for index, hero in enumerate(heroes):
-#     print(f"第{index + 1}个英雄，英雄是{hero}")
-#     count = get_data_by_search_str(hero)
-#     total_count += count
-#
-# print(f"总数据爬取完成，共爬取{total_count}条数据，耗时{time.time() - start_time}秒")
+total_count = 0
+start_time = time.time()
+for index, hero in enumerate(heroes):
+    print(f"第{index + 1}个英雄，英雄是{hero}")
+    count = get_data_by_search_str(hero)
+    total_count += count
+
+print(f"总数据爬取完成，共爬取{total_count}条数据，耗时{time.time() - start_time}秒")

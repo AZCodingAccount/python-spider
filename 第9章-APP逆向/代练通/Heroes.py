@@ -1,5 +1,4 @@
-import requests
-from pyquery import PyQuery as pq
+
 from selenium.webdriver import Chrome
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
