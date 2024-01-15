@@ -116,7 +116,7 @@ def draw_all_scoreline(batch_type, subject_type):
                             or value.split('\n')[0] == f'{batch_type}本'
                             or value.split('\n')[0] == f'本科{batch_type}段'
                             or value.split('\n')[0] == f'汉语言本科{batch_type}批'):
-                        data_y.append(int(value.split('\n')[subject_type].replace('分', "")))  # 取的是文科
+                        data_y.append(int(value.split('\n')[subject_type].replace('分', "")))  # 取的是文科或者理科的分数
         datas_y[province['city']] = data_y  # 把每个省的信息存一下，等下要排名
 
     # 计算每个地区的平均分数
@@ -159,9 +159,9 @@ def parse_scores(data):
 def plot_combined_bar_chart(henan_score, hlj_score, title, type):
     years = ['2018年', '2019年', '2020年', '2021年', '2022年', '2023年']
     bar_width = 0.15
-    index = np.arange(len(years))
+    index = np.arange(len(years))   # 生成等差数列
 
-    fig, ax = plt.subplots(figsize=(18, 10))
+    fig, ax = plt.subplots(figsize=(18, 10))    # 生成轴对象和图标对象
     subject = '文科' if type == 1 else '理科'
 
     # 画henan的本科一批和hlj本科一批

@@ -36,7 +36,7 @@ def draw_pie_with_ip(data):
 
 # 发布评论的时间分布
 def draw_pie_with_time(data):
-    # 确保 'create_time' 列中的值是数字，并且创建一个副本，不要让他报错以为我要修改原来的对象
+    # 确保 'create_time' 列中的值是数字，并且创建一个副本，不要让他报错，以为我要修改原来的对象
     data_clean = data[pd.to_numeric(data['create_time'], errors='coerce').notna()].copy()
 
     # 将 'create_time' 列从 Unix 时间戳转换为 datetime 对象
@@ -83,7 +83,7 @@ def draw_word_cloud_with_comment(text):
 
 # 简单的模式匹配，分析大家评论的倾向频率
 def draw_bar_plot_with_comment(comments_df):
-    # Define patterns for each category based on the provided criteria
+    # 定义不同的匹配模式
     patterns = {
         1: r"支持河南考生移民|支持河南学生迁户口|赞成河南学生迁移",
         2: r"占用黑龙江考生名额|抢占黑龙江学生的机会|河南考生侵占黑龙江名额|抢教育资源",

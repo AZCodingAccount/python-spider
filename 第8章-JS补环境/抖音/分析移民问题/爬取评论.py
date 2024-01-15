@@ -34,17 +34,17 @@ def fake_get_data():
     )
     print(response.json())
 
-
+# 开始爬取所有数据的函数
 def get_all_data():
     global page
     global total_page
     with open(filename, 'a', newline='', encoding='utf-8') as csvfile:  # mode一定是a
-        for item_id in item_id_list:
+        for item_id in item_id_list:    # 遍历不同视频
             is_begin = True  # 是不是刚开始
             is_continue = 0  # 还要不要继续爬
             page = 1  # 重置页数
-            while is_begin or is_continue == 1:
-                # time.sleep(random.randint(1, 3))  # 每次睡几秒
+            while is_begin or is_continue == 1: # 循环爬取
+                time.sleep(random.randint(1, 3))  # 每次睡几秒
                 cursor = page * 20
                 count = 20
                 params = f"device_platform=webapp&aid=6383&channel=channel_pc_web&aweme_id={item_id}&cursor={cursor}&count={count}&item_type=0&insert_ids=&whale_cut_token=&cut_version=1&rcFT=&pc_client_type=1&version_code=170400&version_name=17.4.0&cookie_enabled=true&screen_width=1440&screen_height=900&browser_language=zh-CN&browser_platform=Win32&browser_name=Edge&browser_version=120.0.0.0&browser_online=true&engine_name=Blink&engine_version=120.0.0.0&os_name=Windows&os_version=10&cpu_core_num=16&device_memory=8&platform=PC&downlink=1.45&effective_type=3g&round_trip_time=300&webid=7322737813169997322&msToken=X-9sXWNcpTGrbIJ0La4G7SuEFTfKEvsl9OSplNoSfm-xiqor6oqsZI1HlDy9WSyXRxUP5HENnRfeXFtkPEiuf4WgmvrU1BujPNtJcg-kKZfoQNNAQQDoGg=="
@@ -70,8 +70,6 @@ def get_all_data():
                 comments = response.json()['comments']
                 # 这里我们存储什么字段？
                 # cid 【评论id？】  text：评论内容   digg_count：点赞数   reply_comment_total：评论回复数  nickname：用户昵称   ip_label：所在地域 create_time:创建时间
-                # for comment in comments:
-                #     print(comment)
                 # 下面这个列表推导式做的的工作有从评论中筛选出来指定的字段，并且赋值给新的数组
                 fields_ = ['cid', 'aweme_id', 'text', 'digg_count', 'reply_comment_total', 'nickname', 'ip_label',
                            'create_time']
@@ -94,8 +92,8 @@ def get_all_data():
                 my_database = MyDatabase()
                 my_database.save_data(data)
                 page += 1  # 更新页的参数
-                total_page += 1  # 更新页的参数
-                is_begin = False
+                total_page += 1  # 更新全部页的参数
+                is_begin = False    # 更新不是开始了
 
 
 if __name__ == '__main__':
@@ -115,7 +113,7 @@ if __name__ == '__main__':
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0',
     }
     # 7323036659463785791
-    # 第一个视频500多页，第二个视频364页，第三个视频126页
+    # 指定爬取的视频id列表
     item_id_list = ["7323036659463785791", "7323096163404565786", "7323115639957163279","7323051287136734479","7323066454583135498","7323054311179603238"]  # 爬取这三个视频的评论
     # cursor = 40  # 偏移量
     # count = 20

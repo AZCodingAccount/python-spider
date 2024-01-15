@@ -36,12 +36,9 @@ for city_index, province in enumerate(province_items.items()):
     province_data['city'] = province('.topline .city').text()  # 提取省份名称
     # 这里得提取每个年份的数据，year:2023.score_line:['批次，分数线','普通本科批，463','艺术类本科，点击查看']
     # 其实筛选一下，本科一批，本科二批就可以了，但是爬取完后面再数据处理也可以，更多的扩展空间
-
     years = province('.sline .year').text().split(' ')  # 提取年份名称
     score_data = []  # 存储每年数据的数组
     for year_index, line in enumerate(province('.tline div').items()):
-        # [print(tr.text().strip().replace('\n','')) for tr in line('tr').items()]
-        # print(line.text())
         # 存储每一行的数据
         score_line = [tr.text() for tr in line('tr').items()]
         # 把这一行数据映射到当年
